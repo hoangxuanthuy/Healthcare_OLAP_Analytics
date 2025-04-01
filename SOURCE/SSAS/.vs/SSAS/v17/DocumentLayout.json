@@ -1,0 +1,40 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "G:\\Dowloads\\N\u0102M 3\\OLAP\\DOAN\\SSAS\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{673A2C35-D07B-4DC3-BE48-9A3AB79C831D}|SSAS\\SSAS.dwproj|G:\\Dowloads\\N\u0102M 3\\OLAP\\DOAN\\SSAS\\SSAS\\Health Care DW.cube||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design",
+      "RelativeMoniker": "D:0:0:{673A2C35-D07B-4DC3-BE48-9A3AB79C831D}|SSAS\\SSAS.dwproj|solutionrelative:SSAS\\Health Care DW.cube||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Health Care DW.cube [Design]",
+              "DocumentMoniker": "G:\\Dowloads\\N\u0102M 3\\OLAP\\DOAN\\SSAS\\SSAS\\Health Care DW.cube",
+              "RelativeDocumentMoniker": "SSAS\\Health Care DW.cube",
+              "ToolTip": "G:\\Dowloads\\N\u0102M 3\\OLAP\\DOAN\\SSAS\\SSAS\\Health Care DW.cube [Design]",
+              "RelativeToolTip": "SSAS\\Health Care DW.cube [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-06T09:02:00.463Z",
+              "EditorCaption": " [Design]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

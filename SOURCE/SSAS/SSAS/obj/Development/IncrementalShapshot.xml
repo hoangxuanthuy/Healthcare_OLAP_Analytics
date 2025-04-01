@@ -1,0 +1,103 @@
+﻿<DeploymentSnapshot xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0">
+  <Target>
+    <Database>SSAS</Database>
+    <Server>CAROLINE</Server>
+    <ConnectionString>Data Source=CAROLINE;Timeout=0</ConnectionString>
+  </Target>
+  <Options>
+    <TransactionalDeployment>false</TransactionalDeployment>
+    <PartitionDeployment>DeployPartitions</PartitionDeployment>
+    <RoleDeployment>DeployRolesRetainMembers</RoleDeployment>
+    <ProcessingOption>Default</ProcessingOption>
+    <OutputScript></OutputScript>
+    <ImpactAnalysisFile></ImpactAnalysisFile>
+    <ConfigurationSettingsDeployment>Deploy</ConfigurationSettingsDeployment>
+    <OptimizationSettingsDeployment>Deploy</OptimizationSettingsDeployment>
+    <WriteBackTableCreation>UseExisting</WriteBackTableCreation>
+  </Options>
+  <Snapshot>
+    <ObjectSnapshots>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.RelationalDataSource</Type>
+        <TimeStamp>9ecVyZ3IdDixodYd5+e1KhHEQuk=12/6/2024 2:48:26 PM12/6/2024 2:48:26 PM</TimeStamp>
+        <ID>
+          <String>Health Care DW</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.DataSourceView</Type>
+        <TimeStamp>A2vvWA9RlD7LcnIVB++XLxjP0YM=12/6/2024 2:48:58 PM12/6/2024 2:48:57 PM</TimeStamp>
+        <ID>
+          <String>Health Care DW</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>0PqhoU81cXvNQh0RIL011zv+R8M=12/6/2024 2:53:39 PM12/6/2024 2:49:11 PM</TimeStamp>
+        <ID>
+          <String>DIM DATE</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>FIHYSl+znQSrYOQ/QSd/R63llH0=12/6/2024 2:49:21 PM12/6/2024 2:49:21 PM</TimeStamp>
+        <ID>
+          <String>DIM DOCTOR</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>xqzq/yLwUupcUBV1VkGqJN+meF0=12/6/2024 2:49:31 PM12/6/2024 2:49:31 PM</TimeStamp>
+        <ID>
+          <String>DIM INSURANCE PROVIDER</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>Xc9TZGrAyDoTvT3I16XQmg9nP/U=12/6/2024 2:49:40 PM12/6/2024 2:49:40 PM</TimeStamp>
+        <ID>
+          <String>DIM LOCATION</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>gnxbQ8KS5t4vhRwhwlfeloF8SVw=12/6/2024 2:49:50 PM12/6/2024 2:49:50 PM</TimeStamp>
+        <ID>
+          <String>DIM MEDICATION</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>rnoU6OYaF3jf9y+pqMxM4Ef0VYk=12/6/2024 2:50:04 PM12/6/2024 2:50:04 PM</TimeStamp>
+        <ID>
+          <String>DIM PATIENT</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>3cg96ySnjezVzt8R8Jt4Yeejacs=12/6/2024 2:50:15 PM12/6/2024 2:50:15 PM</TimeStamp>
+        <ID>
+          <String>DIM TEST RESULT</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Cube</Type>
+        <TimeStamp>mPGtdILbqNgkQX6n25/vOnAeATk=12/6/2024 4:01:47 PM12/6/2024 2:50:27 PMBrm9l/4yRBPMDwDjEQISXdAHLSE=12/6/2024 2:50:28 PM12/6/2024 2:50:27 PM</TimeStamp>
+        <ID>
+          <String>Health Care DW</String>
+        </ID>
+      </ObjectSnapshot>
+    </ObjectSnapshots>
+    <DatabaseSnapshot>
+      <Type>Microsoft.AnalysisServices.Database</Type>
+      <TimeStamp>cSX5wFFd2PkhLjQsx4PfumyiLyA=12/6/2024 2:47:31 PM12/6/2024 2:47:31 PM</TimeStamp>
+      <ID>
+        <String>SSAS</String>
+      </ID>
+    </DatabaseSnapshot>
+    <Granularity>Coarse</Granularity>
+  </Snapshot>
+  <AssemblyLocations />
+  <ProcessingComplete>true</ProcessingComplete>
+  <LastDeployed>2024-12-06T09:01:48.176667Z</LastDeployed>
+</DeploymentSnapshot>

@@ -1,0 +1,230 @@
+﻿--Câu 1: Tổng chi phí điều trị của bệnh nhân có bảo hiểm từ các nhà cung cấp bảo hiểm khác nhau theo từng năm 
+SELECT 
+    {[Measures].[Billing Amount]} ON COLUMNS,
+    NONEMPTY(
+        CROSSJOIN(
+            [DIM INSURANCE PROVIDER].[Insurance Provider Name].Children,
+            [Admission Date].[Year].Children
+        )
+    ) ON ROWS
+FROM [Health Care DW]
+-- Cau 2: Thống kê số lượng bệnh nhân có kết quả xét nghiệm " Normal" và " Abnormal" theo từng nhóm máu.
+SELECT 
+    {[Measures].[Fact Count]} ON COLUMNS,
+	NONEMPTY(
+    CROSSJOIN(
+        [DIM PATIENT].[Blood Type].Members,
+        {[DIM TEST RESULT].[Test Result Name].&[Normal], [DIM TEST RESULT].[Test Result Name].&[Abnormal]}
+    ))ON ROWS
+FROM [Health Care DW]
+--CAU 3 Liệt kê tổng số tiền thanh toán theo từng tháng từng quý theo từng năm. 
+SELECT 
+    [Measures].[Billing Amount] ON COLUMNS,
+   {
+DrillDownLevel(
+DrillDownLevel(
+DrillDownLevel(
+[Admission Date].[Hierarchy]))
+)}
+ON ROWS
+FROM [Health Care DW]
+--Câu 4 . Đưa ra số lượng bệnh nhân bị mắc bệnh ‘Cancer' theo từng năm 
+
+WITH 
+    MEMBER [Measures].[Cancer Patient Count] AS 
+        AGGREGATE(
+          [Admission Date].[Year].CurrentMember.Children, 
+            [Measures].[FACT Count]
+        )        
+SELECT 
+    {[Measures].[FACT Count],[Measures].[Cancer Patient Count]} ON COLUMNS,
+    [Admission Date].[Year].Members ON ROWS
+FROM [Health Care DW]
+WHERE ([DIM PATIENT].[Medical Condition].&[Cancer])
+
+--CAU 5: Đưa ra top 5 nhà cung cấp bảo hiểm được sử dụng nhiều nhất trong năm 2023.
+SELECT 
+    {[Measures].[FACT Count]} ON COLUMNS,
+    TOPCOUNT(
+        [DIM INSURANCE PROVIDER].[Insurance ID].children,
+        5, 
+        [Measures].[FACT Count]
+    ) 
+    * [DIM INSURANCE PROVIDER].[Insurance Provider Name].children ON ROWS
+FROM [Health Care DW]
+WHERE ([Admission Date].[Year].&[2023])
+
+
+
+
+
+
+
+
+
+-- CAU 6. Liệt kê những bệnh nhân thuộc nhóm máu "O+" có tổng số tiền thanh toán thuộc top 5
+SELECT 
+    {[Measures].[Billing Amount]} ON COLUMNS,
+    TOPCOUNT(
+        EXCEPT(
+            [DIM PATIENT].[Patient ID].Members, 
+            {[DIM PATIENT].[Patient ID].[All]} 
+        ),
+        5, 
+        [Measures].[Billing Amount]
+    ) 
+    * [DIM PATIENT].[Patient Name].Children ON ROWS
+FROM [Health Care DW]
+WHERE ([DIM PATIENT].[BLOOD TYPE].&[O+])
+
+
+-- CAU 7 .Thông tin bệnh nhân có số tiền thanh toán cao nhất trong quý 2 năm 2024
+SELECT 
+    [Measures].[Billing Amount] ON COLUMNS,
+    HEAD(
+        ORDER(
+            [DIM PATIENT].[Patient Id].Children,
+            [Measures].[Billing Amount],
+            DESC  
+        ),
+        1  
+    ) 
+    * [DIM PATIENT].[Patient Name].Children 
+    * [DIM PATIENT].[Gender].Children 
+    * [DIM PATIENT].[Blood Type].Children 
+    ON ROWS
+FROM [Health Care DW]
+WHERE [Admission Date].[Hierarchy].[Quarter].&[2]&[2024]
+
+-- CAU 8 Liệt kê các bệnh nhân(mã bệnh nhân, tên bệnh nhân, giới tính, nhóm máu) có tổng số tiền thanh toán trong khoảng từ $1000 đến $10000 trong năm 2024.--
+SELECT 
+    [Measures].[Billing amount] ON COLUMNS,
+    NON EMPTY
+    FILTER(
+    [DIM PATIENT].[Patient Id].Children,
+        [Measures].[Billing Amount] > 1000 
+        AND [Measures].[Billing Amount] < 10000
+    ) *
+    [DIM PATIENT].[Patient Name].Children*
+    [DIM PATIENT].[Gender].Children * 
+    [DIM PATIENT].[BLOOD TYPE].Children 
+    ON ROWS
+FROM [Health Care DW]
+WHERE [Admission Date].[YEAR].&[2024]
+
+-- Câu 9. Trong mỗi loại bệnh, in ra bác sĩ  có số lượng bênh nhân lớn nhất trong năm 2022
+SELECT 
+    [Measures].[FACT Count] ON COLUMNS,
+    NON EMPTY 
+    GENERATE(
+        [DIM PATIENT].[Medical Condition].children,
+        TOPCOUNT(
+                CROSSJOIN(
+                    {[DIM PATIENT].[Medical Condition].CurrentMember},
+                    [DIM DOCTOR].[Doctor Name].children      
+            ),
+            1,  
+            ([Measures].[FACT Count])
+        )
+    ) ON ROWS
+FROM [Health Care DW]
+WHERE ([Admission Date].[Year].&[2022])
+
+
+
+
+--CAU 10. Mỗi quý trong năm 2022, liệt kê 3 loại thuốc được kê đơn nhiều nhất.
+SELECT 
+    [Measures].[Fact Count] ON COLUMNS,
+    GENERATE(
+       DESCENDANTS( [Admission Date].[Quarter].children),
+        TOPCOUNT(
+            {[Admission Date].[Quarter].CurrentMember*
+            [DIM MEDICATION].[Medication name].Children},
+            3,
+            [Measures].[Fact Count]
+        )
+    ) ON ROWS
+FROM [Health Care DW]
+WHERE [Admission Date].[Year].&[2022]
+
+-- CAU 11: Tìm bệnh viện có số ca điều trị nhiều nhất cho từng loại bệnh cụ thể
+SELECT 
+    {[Measures].[FACT Count]} ON COLUMNS,
+    NONEMPTY(
+        GENERATE(
+            [DIM PATIENT].[Medical Condition].Children,
+            TOPCOUNT(
+                [DIM LOCATION].[Hospital Name].Children,
+                1,
+                [Measures].[FACT Count]
+            ) *
+            {[DIM PATIENT].[Medical Condition].CurrentMember}
+        )
+    ) ON ROWS
+FROM [Health care DW] 
+
+
+--Câu 12.Tính tổng chi phí hoá đơn của từng bệnh viện của những bệnh nhân có tình trạng bệnh "Diabetes" và có tổng viện phí trên $200000, sau đó sắp xếp theo tổng chi phí giảm dần. 
+SELECT 
+    ORDER(
+        FILTER(
+            {[DIM LOCATION].[Hospital Name].Members}, 
+            [Measures].[Billing Amount] > 200000  
+        ),
+  [Measures].[Billing Amount] ,           
+       BDESC                                         
+    ) ON ROWS,
+    {[Measures].[Billing Amount]} ON COLUMNS
+FROM [Health Care DW]
+WHERE [DIM PATIENT].[Medical Condition].&[Diabetes]
+
+
+-- Cau 13 Đưa ra phần trăm bệnh nhân của từng nhóm máu trong năm 2023.
+WITH 
+    MEMBER [Measures].[Blood Type Patient Percentage] AS 
+        ([Measures].[FACT Count]) / 
+        SUM(
+            [DIM PATIENT].[Blood Type].CurrentMember.Parent,
+            [Measures].[FACT Count]
+        ), 
+        FORMAT_STRING = 'Percent'
+
+SELECT 
+    {[Measures].[Blood Type Patient Percentage]} ON COLUMNS,
+    {[DIM PATIENT].[Blood Type].Children} ON ROWS
+FROM [Health Care DW]
+WHERE ([Admission Date].[Year].&[2023])
+
+
+--cau 14 Liệt kê những bệnh nhân thuộc top 5 viện phí cao nhất / top 3 số lần nhập viện nhiều nhất.
+SELECT 
+    {[Measures].[Billing Amount], [Measures].[Fact Count]} ON COLUMNS,
+    {
+        UNION(
+            -- Top 5 bệnh nhân theo viện phí
+            TOPCOUNT(
+                {[DIM PATIENT].[Patient ID].Children * [DIM PATIENT].[Patient Name].Children},
+                5,
+                [Measures].[Billing Amount]
+            ),
+            -- Top 3 bệnh nhân theo số lần nhập viện
+            TOPCOUNT(
+                {[DIM PATIENT].[Patient ID].Children * [DIM PATIENT].[Patient Name].Children},
+                3,
+                [Measures].[Fact Count]
+            )
+        )
+    } ON ROWS
+FROM [Health Care DW]
+
+
+--Cau 15 Cho biết bệnh viện có doanh thu  cao nhất và bệnh viện có doanh thu thấp nhất. 
+SELECT {[Measures].[Billing Amount]} ON COLUMNS, 
+UNION( 
+TOPCOUNT([DIM LOCATION].[Hospital Name].Children, 1, [Measures].[Billing Amount]), 
+BOTTOMCOUNT([DIM LOCATION].[Hospital Name].Children, 1, [Measures].[Billing Amount]) ) 
+ON ROWS 
+FROM [Health Care DW]
+
+
